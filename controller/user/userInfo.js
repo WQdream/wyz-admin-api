@@ -9,20 +9,20 @@
 
 
  // 创建
- const SimComCreate = (user_name, user_password, user_profile, nick_name, user_intro, user_phone, gender, user_identity) => {
+ const SimComCreate = (user_name, user_password, nick_name, roles, if_vip, re_time) => {
     let id = nanoid();
     let pwd = encrypt(user_password);
-    let sql = `insert into p_common_user (id, user_name, user_password, user_profile, 
-                 nick_name, user_intro, user_phone, gender, user_identity, create_time, update_time)
-                  values ("${id}", "${user_name}", "${pwd}", "${user_profile}",
-                   "${nick_name}", "${user_intro}", "${user_phone}", "${gender}", "${user_identity}", "${getCurrentTime()}", "${getCurrentTime()}");`
+    let sql = `insert into users (id, user_name, user_password, 
+                 nick_name, roles, if_vip, re_time, create_time, update_time)
+                  values ("${id}", "${user_name}", "${pwd}",
+                   "${nick_name}", "${roles}", "${if_vip}", "${re_time}", "${getCurrentTime()}", "${getCurrentTime()}");`
     return execSql(sql)
 }
 
 // 判断用户是否存在
 const if_exist =  (user_name) => {
    // 查询用户是否存在 sql
-   let userSql = `SELECT * FROM p_common_user WHERE user_name = "${user_name}"`
+   let userSql = `SELECT * FROM users WHERE user_name = "${user_name}"`
    return execSql(userSql)
 }
 

@@ -12,12 +12,10 @@
     // 解析 post 请求
     let user_name = req.body.user_name;
     let user_password = req.body.user_password;
-    let user_profile = req.body.user_profile;
-    let nick_name = req.body.nick_name;
-    let user_intro = req.body.user_intro;
-    let user_phone = req.body.user_phone;
-    let gender = req.body.gender;
-    let user_identity = req.body.user_identity;
+    let nick_name = req.body.nick_name?req.body.nick_name:'默认用户';
+    let roles = 0;
+    let if_vip = 0;
+    let re_time = 0;
 
     if_exist(user_name).then(userInfo => {
         if(userInfo[0]){
@@ -27,7 +25,7 @@
             },"用户创建失败！");
             res.status(201).send(user_yes);
         }else{
-            SimComCreate(user_name, user_password, user_profile, nick_name, user_intro, user_phone, gender, user_identity).then( () => {
+            SimComCreate(user_name, user_password, nick_name, roles, if_vip, re_time).then( () => {
                 const createUserInfo = new SuccessModel({
                     tip: '用户创建成功',
                     createTime: getCurrentTime()
